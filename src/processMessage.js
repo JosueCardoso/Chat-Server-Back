@@ -1,10 +1,11 @@
-const receiveMessage = (data) => {
+const userService = require('./userService');
+
+const receiveMessage = async (data) => {
     const protocol = data.protocol;
 
     switch(protocol){
         case "LOGIN":
-            console.log("Logar");
-            break;
+            return userService.Authenticate(data);
         case "REGISTER":
             console.log("Registrar");
             break;
