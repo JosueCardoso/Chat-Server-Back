@@ -9,6 +9,7 @@ const processMessage = require('./src/processMessage');
 let usersOnline = [];//TODO: Alterar para adicionar o id e fazer o controle de quem está online pelo id
 
 io.on('connection', socket => {
+    socket.emit('connectionStatus', "CLIENT_CONNECTED");
     
     //Ouve a mensagem que veio dos clients
     socket.on('sendMessage', data => {
