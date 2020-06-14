@@ -1,7 +1,7 @@
 const userDAO = require('./userDAO');
 const isNullOrEmpty = require('./helper/isNullOrEmpty');
 
-const userService = {
+const userService = {    
     async Authenticate (data) {   
         const username = data.username;
         const password = data.password;
@@ -23,6 +23,16 @@ const userService = {
         responseObject.username = username;
     
         return responseObject; 
+    },
+    async Register (data){
+        const username = data.username;
+        const password = data.password;
+        const email = data.email;
+        
+        if(await isNullOrEmpty(username) || await isNullOrEmpty(password) || await isNullOrEmpty(email))
+            return false;  
+
+        return await userDAO.InsertUser(username, password, email);
     }
 }
 

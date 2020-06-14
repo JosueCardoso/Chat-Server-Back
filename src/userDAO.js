@@ -1,6 +1,7 @@
 const fakeUser = {
     username: "Josue",
-    password: "1234"
+    password: "1234",
+    email: "josuecardoso@printwayy.com"
 }
 
 let fakeRepository = [fakeUser];
@@ -12,7 +13,20 @@ const userDAO = {
         });        
     },
     InsertUser(username, password, email){
-        
+        return new Promise( (resolve) => {  
+            const userAlreadyRegistered = fakeRepository.find(user => user.username === username && user.email === email) != null;
+            
+            if(userAlreadyRegistered)
+                resolve(false);            
+
+            fakeRepository.push({
+                username: username,
+                password: password,
+                email: email
+            })
+
+            resolve(true);
+        })        
     }
 }
 

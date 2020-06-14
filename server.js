@@ -6,11 +6,10 @@ const io = require('socket.io')(server);
 
 const processMessage = require('./src/processMessage');
 
-let usersOnline = [];
+let usersOnline = [];//TODO: Alterar para adicionar o id e fazer o controle de quem está online pelo id
 
 io.on('connection', socket => {
-    //TODO: Adicionar tratamento para quando o usuário se conectar(Se caiu aqui é porque se conectou)
-
+    
     //Ouve a mensagem que veio dos clients
     socket.on('sendMessage', data => {
         const protocol = data.protocol;
@@ -27,7 +26,11 @@ io.on('connection', socket => {
                     }     
                     break;      
                 case "REGISTER":
-                    console.log("Registrar");
+                    if(processedMessage){
+                        socket.emit('responseStatus', "USER_REGISTERED");
+                    }else{
+                        socket.emit('responseStatus', "USER_NOT_REGISTERED");
+                    }                    
                     break;
                 case "MESSAGE":
                     console.log("Mensagem Recebida");

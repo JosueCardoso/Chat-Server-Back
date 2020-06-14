@@ -7,8 +7,7 @@ const receiveMessage = async (data) => {
         case "LOGIN":
             return userService.Authenticate(data);
         case "REGISTER":
-            console.log("Registrar");
-            break;
+            return userService.Register(data);            
         case "MESSAGE":
             console.log("Mensagem Recebida");
             break;            
