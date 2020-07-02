@@ -4,10 +4,17 @@ const fakeUser = {
     email: "josuecardoso@printwayy.com"
 }
 
-let fakeRepository = [fakeUser];
+const fakeUser2 = {
+    username: "admin",
+    password: "admin",
+    email: "admin@admin.com"
+}
+
+let fakeRepository = [fakeUser, fakeUser2];
 
 const userDAO = {
     FindUserByUsernameAndPassword (username, password){   
+        console.log(username+" - "+password)
         return new Promise( (resolve) => {
             resolve(fakeRepository.find(user => user.username === username && user.password === password));
         });        

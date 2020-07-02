@@ -8,13 +8,15 @@ const processMessage = require('./src/processMessage');
 
 let usersOnline = [];//TODO: Alterar para adicionar o id e fazer o controle de quem está online pelo id
 
+const emitMessageForAllUser = ( message ) => io.sockets.emit('receivedMessage', message);
+
 io.on('connection', socket => {
     socket.emit('connectionStatus', "CLIENT_CONNECTED");
     
     //Ouve a mensagem que veio dos clients
     socket.on('sendMessage', data => {
         const protocol = data.protocol;
-
+        
         processMessage(data).then((processedMessage) => {
 
             switch(protocol){
@@ -34,7 +36,11 @@ io.on('connection', socket => {
                     }                    
                     break;
                 case "MESSAGE":
-                    console.log("Mensagem Recebida");
+                    if(processedMessage.isValid){
+                        emitMessageForAllUser(processedMessage.message)
+                    }else{
+                        socket.emit('responseStatus', "MESSAGE_NOT_VALID");
+                    }                
                     break;            
                 default:
                     console.log("Não conseguiu identificar o que ocorreu");

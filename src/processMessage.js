@@ -1,4 +1,5 @@
 const userService = require('./userService');
+const messageService = require('./messageService');
 
 const receiveMessage = async (data) => {
     const protocol = data.protocol;
@@ -9,7 +10,7 @@ const receiveMessage = async (data) => {
         case "REGISTER":
             return userService.Register(data);            
         case "MESSAGE":
-            console.log("Mensagem Recebida");
+            return messageService.ProcessMessage(data);
             break;            
         default:
             console.log("Não conseguiu identificar o que ocorreu");
