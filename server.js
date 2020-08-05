@@ -12,7 +12,8 @@ const emitMessageForAllUser = ( message ) => io.sockets.emit('receivedMessage', 
 
 io.on('connection', socket => {
     socket.emit('connectionStatus', "CLIENT_CONNECTED");
-    
+    let userConnected;
+
     //Ouve a mensagem que veio dos clients
     socket.on('sendMessage', data => {
         const protocol = data.protocol;
@@ -25,6 +26,7 @@ io.on('connection', socket => {
                         socket.emit('responseStatus', "USER_AUTHENTICATED");
                         usersOnline.push(processedMessage.username);
                         io.sockets.emit('userJoin', processedMessage.username);
+                        userConnected = processedMessage.username;
                     }else{
                         socket.emit('responseStatus', "USER_NOT_AUTHENTICATED");
                     }     
@@ -51,7 +53,7 @@ io.on('connection', socket => {
 
     //Ouve se o usuário se desconectou
     socket.on('disconnect', () =>{
-        console.log("desconectou");
+        io.sockets.emit('userLeft', userConnected);
     });
 });
 
