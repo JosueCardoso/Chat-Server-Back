@@ -24,6 +24,7 @@ io.on('connection', socket => {
                     if(processedMessage.isAuthenticated){
                         socket.emit('responseStatus', "USER_AUTHENTICATED");
                         usersOnline.push(processedMessage.username);
+                        io.sockets.emit('userJoin', processedMessage.username);
                     }else{
                         socket.emit('responseStatus', "USER_NOT_AUTHENTICATED");
                     }     

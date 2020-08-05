@@ -21,7 +21,7 @@ const userService = {
     
         responseObject.isAuthenticated = true;
         responseObject.username = username;
-    
+        
         return responseObject; 
     },
     async Register (data){
