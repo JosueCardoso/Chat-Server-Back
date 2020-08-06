@@ -8,7 +8,8 @@ const userService = {
     
         let responseObject = {
             isAuthenticated: false,
-            username: ""
+            user: {},
+
         };    
         
         if(await isNullOrEmpty(username) || await isNullOrEmpty(password))
@@ -20,7 +21,10 @@ const userService = {
             return responseObject;
     
         responseObject.isAuthenticated = true;
-        responseObject.username = username;
+        responseObject.user = {
+            id: userAuthenticated.id,
+            username: userAuthenticated.username
+        };
         
         return responseObject; 
     },

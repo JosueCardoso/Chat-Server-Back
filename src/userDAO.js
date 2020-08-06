@@ -1,10 +1,12 @@
 const fakeUser = {
+    id: 1,
     username: "Josue",
     password: "1234",
     email: "josuecardoso@printwayy.com"
 }
 
 const fakeUser2 = {
+    id: 2,
     username: "admin",
     password: "admin",
     email: "admin@admin.com"

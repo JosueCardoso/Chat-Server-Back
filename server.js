@@ -6,7 +6,7 @@ const io = require('socket.io')(server);
 
 const processMessage = require('./src/processMessage');
 
-let usersOnline = [];//TODO: Alterar para adicionar o id e fazer o controle de quem está online pelo id
+let usersOnline = [];
 
 const emitMessageForAllUser = ( message ) => io.sockets.emit('receivedMessage', message);
 
@@ -24,9 +24,10 @@ io.on('connection', socket => {
                 case "LOGIN":
                     if(processedMessage.isAuthenticated){
                         socket.emit('responseStatus', "USER_AUTHENTICATED");
-                        usersOnline.push(processedMessage.username);
-                        io.sockets.emit('userJoin', processedMessage.username);
-                        userConnected = processedMessage.username;
+                        usersOnline.push(processedMessage.user);
+                        io.sockets.emit('userJoin', processedMessage.user);
+                        io.sockets.emit('usersList', usersOnline);
+                        userConnected = processedMessage.user;
                     }else{
                         socket.emit('responseStatus', "USER_NOT_AUTHENTICATED");
                     }     
@@ -53,7 +54,9 @@ io.on('connection', socket => {
 
     //Ouve se o usuário se desconectou
     socket.on('disconnect', () =>{
+        usersOnline = usersOnline.filter(x=>x.id !== userConnected.id)
         io.sockets.emit('userLeft', userConnected);
+        io.sockets.emit('usersList', usersOnline);
     });
 });
 
