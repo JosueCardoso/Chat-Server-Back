@@ -12,7 +12,7 @@ const emitMessageForAllUser = ( message ) => io.sockets.emit('receivedMessage', 
 
 io.on('connection', socket => {
     socket.emit('connectionStatus', "CLIENT_CONNECTED");
-    let userConnected;
+    let userConnected = {};
 
     //Ouve a mensagem que veio dos clients
     socket.on('sendMessage', data => {
