@@ -1,4 +1,5 @@
-# Chat - Server (Clique aqui para ir ao Chat - Client)
+# Chat - Server
+[Clique aqui pra ir até o Chat-Client](https://github.com/JosueCardoso/Chat-Client)
 
 Projeto criado para conclusão da disciplina de Programação de Sistemas Distribuídos. 
 
